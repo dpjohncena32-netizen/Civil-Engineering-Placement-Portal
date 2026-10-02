@@ -1,0 +1,455 @@
+<!--
+  CIVIL ENGINEERING PLACEMENT PORTAL
+  Public/GitHub-safe frontend
+
+  No institution-specific branding, student records, private IDs,
+  deployment URLs, or passwords are embedded in this file.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Civil Engineering Placement Portal</title>
+<style>
+:root{--navy:#063b78;--blue:#0b67c9;--blue2:#1680e8;--gold:#f5bd19;--ink:#102a43;--muted:#61758a;--bg:#f3f8fd;--line:#d9e5f0;--white:#fff;--green:#16a34a;--red:#dc2626}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eef6fd 0,#f8fbff 45%,#eef5fb 100%)}
+button,input{font:inherit}.hidden{display:none!important}.container{max-width:1500px;margin:auto;padding:18px}.card{background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(17,60,100,.08);margin-bottom:18px}
+button{border:0;border-radius:10px;padding:12px 18px;margin:4px;cursor:pointer;font-weight:700;transition:.18s}.primary{background:linear-gradient(135deg,#0868d0,#0b55aa);color:#fff}.primary:hover{transform:translateY(-1px);box-shadow:0 8px 18px #0868d044}.success{background:#159447;color:#fff}.danger{background:#d62f2f;color:#fff}.secondary{background:#64748b;color:#fff}.warning{background:#e59a00;color:#fff}
+input{width:100%;padding:13px 14px;margin:6px 0 14px;border:1px solid #cbd8e5;border-radius:10px;background:#fff;outline:none}input:focus{border-color:#1680e8;box-shadow:0 0 0 3px #1680e822}
+.message{padding:12px 14px;border-radius:10px;margin:10px 0}.error{background:#fee2e2;color:#991b1b}.ok{background:#dcfce7;color:#166534}
+/* Main/login branding */
+.login-shell{max-width:760px;margin:18px auto 30px}.login-branding{text-align:center;padding:22px 18px 8px}.main-logo{width:128px;height:128px;object-fit:contain;border-radius:8px;display:block;margin:0 auto 8px}.institute-name{font-size:28px;font-weight:900;letter-spacing:.4px;color:#c52222;text-transform:uppercase}.institute-sub{font-size:17px;font-weight:800;color:var(--navy);margin-top:3px}.department-name{display:inline-block;margin-top:12px;padding:9px 22px;border-radius:7px;background:linear-gradient(90deg,#063b78,#0b67c9);color:#fff;font-size:17px;font-weight:900;letter-spacing:.5px}.portal-name{margin:14px auto 4px;color:#0b4e93;font-size:30px;font-weight:900}.portal-tag{font-size:13px;letter-spacing:2px;color:#687c90;font-weight:700}.login-card{max-width:620px;margin:16px auto 0}.login-title{text-align:center}.login-title h2{margin:0;color:var(--navy);font-size:23px}.login-title p{color:var(--muted);margin:7px 0 20px}.login-actions{display:flex;gap:8px;flex-wrap:wrap}.login-actions button{flex:1;min-width:180px}
+/* Portal header */
+.portal-header{background:linear-gradient(115deg,#063b78 0%,#0b63bf 70%,#07457f 100%);color:#fff;border-radius:18px;padding:14px 20px;margin-bottom:18px;box-shadow:0 12px 28px rgba(3,58,112,.22);position:relative;overflow:hidden}.portal-header:after{content:"";position:absolute;right:-80px;top:-90px;width:280px;height:280px;border-radius:50%;background:#ffffff0d}.brand-left{display:flex;align-items:center;gap:14px;min-width:0}.brand-logo{width:72px;height:72px;border-radius:14px;display:grid;place-items:center}.generic-mark-small{background:rgba(255,255,255,.16);color:#fff;font-weight:950;font-size:24px}.brand-title{font-size:19px;font-weight:900;letter-spacing:.2px}.brand-sub{font-size:12px;opacity:.92;margin-top:4px;font-weight:700;letter-spacing:.3px}.student-profile{display:flex;align-items:center;gap:12px;text-align:right;z-index:1}.student-photo{width:62px;height:72px;object-fit:cover;border-radius:9px;border:2px solid #fff;background:#dbe8f4}.student-photo-fallback{display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#0b5cab;background:#fff}.student-name{font-weight:900;font-size:14px}.student-meta{font-size:11px;opacity:.9;margin-top:3px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+/* Dashboard */
+.dashboard-hero{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 8px 25px #1c4f7d12;margin-bottom:18px}.welcome h1{margin:0;color:var(--navy);font-size:26px}.welcome h1 span{color:#0868d0}.welcome-meta{margin-top:10px;color:#34536f}.welcome-note{margin-top:8px;font-style:italic;color:#60758a}.profile-panel{display:flex;align-items:center;gap:12px}.profile-panel .student-photo{width:78px;height:90px}.profile-details{min-width:145px}.profile-details strong{font-size:15px}.profile-details div{font-size:12px;color:#50687e;margin-top:4px}.logout-btn{white-space:nowrap}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}.section-head h2{margin:0;color:var(--navy);font-size:25px}.section-head p{margin:5px 0 0;color:var(--muted)}.legend{display:flex;gap:9px;flex-wrap:wrap}.legend span{padding:7px 11px;border-radius:20px;font-size:12px;font-weight:800;background:#f1f5f9}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}.dot.green{background:#16a34a}.dot.yellow{background:#f2b70b}.dot.red{background:#dc2626}.dot.blue{background:#1674d1}
+.test-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:20px}.test-card{border:1px solid #dce6ef;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 5px 16px #174d7c10;transition:.18s}.test-card:hover{transform:translateY(-2px);box-shadow:0 10px 22px #174d7c18}.test-card h3{margin:0;padding:10px 14px;background:linear-gradient(90deg,#063b78,#0b63b9);color:#fff;font-size:18px}.test-body{padding:14px}.test-title{font-weight:800;line-height:1.35;color:#183b5b;min-height:38px}.test-info{font-size:13px;line-height:1.8;color:#38546c;margin:8px 0}.badge{display:inline-block;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:900}.green{background:#dcfce7;color:#15803d}.red{background:#fee2e2;color:#b91c1c}.orange{background:#fef3c7;color:#a16207}.blue{background:#dbeafe;color:#1d4ed8}.test-btn{width:100%;margin:8px 0 0}.small{font-size:12px;color:#6b7e91}
+/* Exam/result/response */
+.timer{background:#111827;color:#fff;padding:10px 15px;border-radius:9px;font-weight:900}.progress-wrap{height:10px;background:#e5e7eb;border-radius:20px;overflow:hidden}.progress{height:100%;background:linear-gradient(90deg,#0b67c9,#21a1ff);width:0}.question-text{font-size:20px;font-weight:700;line-height:1.6;margin:16px 0}.option{padding:14px;border:1px solid #d7e1eb;border-radius:10px;margin:9px 0;cursor:pointer;background:#fff}.option:hover{border-color:#0b67c9;background:#f7fbff}.option.selected{background:#eaf4ff;border-color:#0b67c9;box-shadow:0 0 0 2px #0b67c922}.option input{width:auto;margin:0 8px 0 0}.nav{display:flex;justify-content:space-between;flex-wrap:wrap;margin-top:20px}.score{text-align:center;font-size:50px;font-weight:900;color:#0b67c9}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:18px 0}.box{background:#f4f8fc;padding:14px;border-radius:10px}.box .num{font-size:24px;font-weight:900}.response-question{border:1px solid #dbe4ec;border-radius:10px;padding:17px;margin:12px 0}.correct{border-left:6px solid #159447}.wrong{border-left:6px solid #d62f2f}.unanswered{border-left:6px solid #e59a00}.answer{padding:9px;margin-top:7px;border-radius:7px;background:#f3f4f6}.correctAnswer{background:#ecfdf5}.wrongAnswer{background:#fef2f2}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%}th,td{border:1px solid #d8e1e9;padding:8px;white-space:nowrap}th{background:#063b78;color:#fff}.admin-test{border:1px solid #dce5ed;border-radius:10px;padding:15px;margin:10px 0}.portal-note{color:#667085;font-size:13px}
+.admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}.admin-toolbar input,.admin-toolbar select{margin:0;min-width:170px}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:15px 0}.admin-stat{background:#f5f9fd;border:1px solid #dce8f2;border-radius:12px;padding:14px}.admin-stat .label{font-size:12px;color:#667085;text-transform:uppercase;font-weight:800;letter-spacing:.4px}.admin-stat .value{font-size:27px;font-weight:950;color:#063b78;margin-top:4px}
+.admin-section{margin-top:20px}.admin-section h3{margin-bottom:6px}.admin-table th{position:sticky;top:0;z-index:1}.admin-actions{display:flex;gap:8px;flex-wrap:wrap}.admin-actions button{width:auto}.admin-note{font-size:12px;color:#667085}
+@media(max-width:760px){.admin-toolbar input,.admin-toolbar select{width:100%;min-width:0}.admin-actions button{width:100%}}
+@media(max-width:1150px){.test-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:760px){.container{padding:10px}.card{padding:16px}.main-logo{width:105px;height:105px}.institute-name{font-size:22px}.institute-sub{font-size:14px}.department-name{font-size:14px}.portal-name{font-size:23px}.dashboard-hero{align-items:flex-start}.profile-panel{width:100%;flex-wrap:wrap}.test-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.brand-title{font-size:15px}.brand-logo{width:58px;height:58px}.student-profile{width:100%;text-align:left}.login-actions button{width:100%}}@media(max-width:500px){.test-grid{grid-template-columns:1fr}.dashboard-hero{padding:15px}.welcome h1{font-size:21px}.profile-panel .student-photo{width:62px;height:72px}}
+
+.inline-row{display:flex;gap:10px;align-items:stretch}.inline-row input{flex:1}.small-btn{width:auto!important;white-space:nowrap;padding:0 22px}.verified-box{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0;padding:16px;border:1px solid #d8e5f4;border-radius:14px;background:#f7fbff}.verified-box div{display:flex;flex-direction:column;gap:5px}.verified-box span{font-size:12px;color:#667085;text-transform:uppercase;letter-spacing:.5px}.verified-box b{color:#0b4f94;font-size:16px}.muted{color:#667085}.small-note{font-size:13px}
+
+ .generic-mark{width:96px;height:96px;border-radius:24px;margin:0 auto 14px;display:grid;place-items:center;background:linear-gradient(135deg,#063b78,#1680e8);color:#fff;font-size:32px;font-weight:950;letter-spacing:2px;box-shadow:0 12px 30px rgba(3,59,120,.2)}
+ .security-warning{position:fixed;inset:0;z-index:99998;background:rgba(3,20,40,.58);display:flex;align-items:flex-start;justify-content:center;padding-top:12vh}.security-warning-box{width:min(620px,92vw);background:#fff;border:3px solid #dc2626;border-radius:18px;padding:26px;box-shadow:0 25px 70px rgba(0,0,0,.35);text-align:center}.security-warning-title{font-size:22px;font-weight:900;color:#b91c1c;margin-bottom:10px}.security-warning.hidden{display:none!important}
+</style>
+</head>
+<body class="splash-lock">
+
+</div>
+
+<div class="container">
+<div id="portalHeader" class="portal-header hidden">
+  <div class="row">
+    <div class="brand-left">
+      <div class="brand-logo generic-mark-small">CE</div>
+      <div>
+        <div class="brand-title">CIVIL ENGINEERING PLACEMENT PORTAL</div>
+        <div class="brand-sub">ONLINE ASSESSMENT & PLACEMENT READINESS PLATFORM</div>
+      </div>
+    </div>
+    <div class="student-profile">
+      <div><div id="profileName" class="student-name"></div><div id="profileMeta" class="student-meta"></div></div>
+      <div id="photoBox"></div>
+    </div>
+  </div>
+</div>
+
+<div id="loginView" class="login-shell">
+  <div class="login-branding"><div class="generic-mark">CE</div><div class="institute-name" style="color:#063b78">CIVIL ENGINEERING</div><div class="institute-sub">PLACEMENT PORTAL</div><div class="department-name">ONLINE ASSESSMENT &amp; PLACEMENT READINESS</div></div><div class="card login-card">
+    <div class="login-title"><h2>Student Login</h2><p>Use your Roll Number and Password to continue.</p></div>
+    <div id="loginMsg" class="message error hidden"></div>
+    <label>Roll Number</label><input id="loginUser" placeholder="Enter Roll Number">
+    <label>Password</label><input id="loginPass" type="password" placeholder="Enter Password">
+    <div class="login-actions">
+      <button class="primary" onclick="login()">Login</button>
+      <button class="secondary" onclick="show('registerView')">New Student Registration</button>
+      <button class="warning" onclick="show('adminLoginView')">Faculty Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<div id="registerView" class="card hidden">
+<div class="header"><h2>Student Registration</h2><p class="muted">Enter your Roll Number. Your registered academic details will be fetched automatically.</p></div>
+<div id="regMsg" class="message hidden"></div>
+<label>Roll Number</label>
+<div class="inline-row"><input id="rRoll" placeholder="Enter Roll Number" autocomplete="off"><button class="primary small-btn" onclick="verifyStudentRoll()">Verify Roll No</button></div>
+<div id="verifiedStudent" class="hidden">
+  <div class="verified-box">
+    <div><span>Student Name</span><b id="rName"></b></div>
+    <div><span>Branch</span><b id="rBranch"></b></div>
+    <div><span>Section</span><b id="rSection"></b></div>
+  </div>
+  <p class="muted small-note">No Father Name, Mobile Number or Email ID is required for registration.</p>
+  <button class="success" onclick="register()">Create Student Login</button>
+</div>
+<button class="secondary" onclick="show('loginView')">Back to Login</button>
+<div id="credentials" class="message ok hidden"></div>
+</div>
+
+<div id="dashboardView" class="card hidden">
+  <div class="dashboard-hero">
+    <div class="welcome">
+      <h1>Welcome, <span id="dashName"></span></h1>
+      <div class="welcome-meta">Roll No: <b id="dashRoll"></b> &nbsp;|&nbsp; Branch: <b id="dashBranch"></b> &nbsp;|&nbsp; Section: <b id="dashSection"></b></div>
+      <div class="welcome-note">“Consistent Practice Builds a Stronger You!”</div>
+    </div>
+    <div class="profile-panel">
+      <div id="dashPhotoBox"></div>
+      <div class="profile-details"><strong id="dashProfileName"></strong><div id="dashProfileRoll"></div><div id="dashProfileBranch"></div><div id="dashProfileSection"></div></div>
+      <button class="primary logout-btn" onclick="logout()">⇥ Logout</button>
+    </div>
+  </div>
+  <div class="section-head">
+    <div><h2>▣ Available Tests</h2><p>One test per scheduled day. Each test contains 100 questions and 90 minutes.</p></div>
+    <div class="legend"><span><i class="dot green"></i>Open Now</span><span><i class="dot yellow"></i>Scheduled</span><span><i class="dot red"></i>Locked</span><span><i class="dot blue"></i>Completed</span></div>
+  </div>
+  <div id="tests" class="test-grid"></div>
+</div>
+
+<div id="securityWarning" class="security-warning hidden"><div class="security-warning-box"><div class="security-warning-title">⚠ Examination Security Warning</div><div id="securityWarningText"></div></div></div>
+<div id="examView" class="card hidden">
+<div class="row"><div><b id="examTitle"></b><div id="examStudent"></div></div><div id="timer" class="timer">90:00</div></div>
+<div class="progress-wrap"><div id="progress" class="progress"></div></div>
+<div id="counter"></div><div id="topic"></div><div id="qtext" class="question-text"></div><div id="options"></div>
+<div class="nav"><button id="prev" class="secondary" onclick="prevQ()">← Previous</button><button id="next" class="primary" onclick="nextQ()">Next →</button><button id="submit" class="danger hidden" onclick="submitExam(false)">Submit Exam</button></div>
+</div>
+
+<div id="resultView" class="card hidden">
+<div class="header"><h2 id="resultTitle"></h2><p id="resultStudent"></p></div><div id="score" class="score"></div><div id="resultGrid" class="grid"></div>
+<button class="primary" onclick="viewResponses()">📋 View My Response Sheet</button><button class="secondary" onclick="loadDashboard()">← Back to Tests</button><button class="danger" onclick="logout()">🚪 Logout</button>
+</div>
+
+<div id="responseView" class="card hidden">
+<div class="header"><h2>Student Response Sheet</h2></div><div id="responseInfo" class="grid"></div><div id="responseSummary" class="grid"></div><div id="responses"></div>
+<div style="text-align:center;border-top:1px solid #ddd;padding-top:18px"><button class="primary" onclick="downloadPDF()">📄 Download Response Sheet PDF</button><button class="secondary" onclick="showResult()">← Back to Result</button><button class="danger" onclick="logout()">🚪 Logout</button></div>
+</div>
+
+<div id="adminLoginView" class="card hidden">
+<div class="header"><h2>Faculty / Admin Dashboard</h2></div><div id="adminMsg" class="message error hidden"></div>
+<label>Username</label><input id="adminUser" value="admin"><label>Password</label><input id="adminPass" type="password">
+<button class="primary" onclick="adminLogin()">Login</button><button class="secondary" onclick="show('loginView')">Back</button>
+</div>
+
+<div id="adminView" class="card hidden">
+<div class="row"><h2>Admin Dashboard</h2><div class="admin-actions"><button class="secondary" onclick="loadAdmin()">↻ Refresh</button><button class="danger" onclick="adminLogout()">Logout</button></div></div>
+
+<div id="adminStats" class="admin-stats"></div>
+
+<div class="card admin-section">
+  <h3>Student Password Recovery</h3>
+  <p class="admin-note">Generate a new random password for a registered student. The existing password is replaced.</p>
+  <div class="inline-row"><input id="resetRoll" placeholder="Student Roll Number"><button class="warning small-btn" onclick="resetPassword()">Generate New Password</button></div>
+  <div id="resetResult"></div>
+</div>
+
+<div class="admin-section">
+  <h3>Test Control</h3>
+  <p class="small">Admin Unlock overrides the normal schedule. Locking prevents new attempts; it does not interrupt an already running attempt.</p>
+  <div id="adminTests"></div>
+</div>
+
+<div class="card admin-section">
+  <h3>Question Bank Management</h3>
+  <p class="small">Upload one complete 100-question CSV for one Test. The system validates the bank before writing anything. Existing questions for the selected Test are replaced only after successful validation, and replacement is blocked if that Test already has attempt records.</p>
+  <div class="inline-row">
+    <select id="bankTestNo">
+      <option value="1">Test 1</option><option value="2">Test 2</option><option value="3">Test 3</option><option value="4">Test 4</option><option value="5">Test 5</option><option value="6">Test 6</option><option value="7">Test 7</option><option value="8">Test 8</option><option value="9">Test 9</option><option value="10">Test 10</option><option value="11">Test 11</option>
+    </select>
+    <input id="bankFile" type="file" accept=".csv,text/csv" onchange="loadQuestionBankFile(event)">
+  </div>
+  <div class="inline-row" style="margin-top:10px">
+    <button class="secondary small-btn" onclick="downloadQuestionTemplate()">⬇ CSV Template</button>
+    <button class="primary small-btn" onclick="previewQuestionBank()">🔎 Validate & Preview</button>
+    <button class="warning small-btn" onclick="importQuestionBank()">📥 Import Question Bank</button>
+  </div>
+  <textarea id="bankCsvText" placeholder="Or paste the complete CSV here..." style="width:100%;min-height:130px;margin-top:12px"></textarea>
+  <div id="bankMsg"></div>
+  <div id="bankPreview" class="table-wrap" style="margin-top:12px"></div>
+</div>
+
+<div class="admin-section">
+  <div class="row"><div><h3>Exam Results</h3><p class="admin-note">Filter the live attempt data below or export the complete result set as CSV.</p></div>
+    <button class="primary" style="width:auto" onclick="exportAdminResults()">⬇ Export CSV</button>
+  </div>
+  <div class="admin-toolbar">
+    <input id="resultSearch" placeholder="Search roll no / student name" oninput="renderAdminResults()">
+    <select id="resultTestFilter" onchange="renderAdminResults()"><option value="">All Tests</option></select>
+    <select id="resultStatusFilter" onchange="renderAdminResults()"><option value="">All Status</option><option value="SUBMITTED">SUBMITTED</option><option value="IN_PROGRESS">IN_PROGRESS</option></select>
+  </div>
+  <div id="adminTable" class="table-wrap"></div>
+</div>
+</div>
+
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let session={},tests=[],exam=null,current=0,answers={},timer=null,result=null,response=null,adminToken='';
+
+const VIEW_IDS=['loginView','registerView','dashboardView','examView','resultView','responseView','adminLoginView','adminView'];
+function show(id){
+  VIEW_IDS.forEach(v=>{const el=$(v); if(el) el.classList.add('hidden');});
+  const target=$(id);
+  if(target) target.classList.remove('hidden');
+}
+function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function duration(s){s=Number(s)||0;return String(Math.floor(s/3600)).padStart(2,'0')+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function msg(id,t,ok=false){$(id).className='message '+(ok?'ok':'error');$(id).textContent=t;$(id).classList.remove('hidden')}
+
+let verifiedStudent=null;
+function verifyStudentRoll(){
+  const roll=$('rRoll').value.trim();
+  $('credentials').classList.add('hidden');
+  if(!roll){msg('regMsg','Enter your Roll Number.');return;}
+  $('regMsg').classList.add('hidden');
+  google.script.run.withSuccessHandler(r=>{
+    verifiedStudent=r;
+    $('rName').textContent=r.name||'';
+    $('rBranch').textContent=r.branch||'Civil Engineering';
+    $('rSection').textContent=r.section||'';
+    $('verifiedStudent').classList.remove('hidden');
+  }).withFailureHandler(e=>{verifiedStudent=null;$('verifiedStudent').classList.add('hidden');msg('regMsg',e.message)}).getStudentByRollNo(roll);
+}
+function register(){
+  if(!verifiedStudent){msg('regMsg','Please verify your Roll Number first.');return;}
+  const d={rollNo:verifiedStudent.rollNo};
+  google.script.run.withSuccessHandler(r=>{
+    $('credentials').innerHTML='<b>Registration successful.</b><br><br>Username: <b>'+esc(r.username)+'</b><br>Password: <b>'+esc(r.password)+'</b><br><br><span class="small-note">Please save these credentials. You will use them for Student Login.</span>';
+    $('credentials').classList.remove('hidden');
+  }).withFailureHandler(e=>msg('regMsg',e.message)).registerStudent(d);
+}
+function login(){
+ google.script.run.withSuccessHandler(r=>{
+   session=r;
+   applyProfileHeader();
+   loadDashboard();
+   loadStudentPhoto();
+ }).withFailureHandler(e=>msg('loginMsg',e.message)).login($('loginUser').value,$('loginPass').value)
+}
+function initialsFor(){return String(session.name||session.rollNo||'ST').split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase()||'ST'}
+function fallbackPhoto(boxId,large){const div=document.createElement('div');div.className='student-photo student-photo-fallback';if(large)div.style.cssText='width:78px;height:90px';div.textContent=initialsFor();$(boxId).innerHTML='';$(boxId).appendChild(div)}
+function setPhoto(data){
+ ['photoBox','dashPhotoBox'].forEach(id=>{
+   if(!$(id)) return;
+   $(id).innerHTML='';
+   if(data){const img=document.createElement('img');img.className='student-photo';if(id==='dashPhotoBox'){img.style.width='78px';img.style.height='90px'}img.src=data;img.alt='Student Photo';$(id).appendChild(img)}
+   else fallbackPhoto(id,id==='dashPhotoBox');
+ });
+}
+function applyProfileHeader(){
+ $('portalHeader').classList.remove('hidden');
+ $('profileName').textContent=session.name||'';
+ $('profileMeta').textContent=(session.rollNo||'')+' • '+(session.branch||'Civil Engineering')+(session.section?' • Section '+session.section:'');
+ setPhoto('');
+}
+function loadStudentPhoto(){
+ google.script.run.withSuccessHandler(r=>{session.photoDataUrl=r.photoDataUrl||'';setPhoto(session.photoDataUrl)}).withFailureHandler(()=>{setPhoto('')}).getStudentProfileAssets(session.studentId,session.token);
+}
+function loadDashboard(){show('dashboardView');$('dashName').textContent=session.name||'';$('dashRoll').textContent=session.rollNo||'';$('dashBranch').textContent=session.branch||'Civil Engineering';$('dashSection').textContent=session.section||'-';$('dashProfileName').textContent=session.name||'';$('dashProfileRoll').textContent=session.rollNo||'';$('dashProfileBranch').textContent=session.branch||'Civil Engineering';$('dashProfileSection').textContent='Section: '+(session.section||'-');setPhoto(session.photoDataUrl||'');google.script.run.withSuccessHandler(r=>{tests=r.tests;renderTests()}).withFailureHandler(e=>alert(e.message)).getTests(session.studentId,session.token)}
+function renderTests(){
+ $('tests').innerHTML='';
+ tests.forEach(t=>{
+  const c=document.createElement('div');c.className='test-card';
+  let badge='badge ',button='';
+  if(t.state==='AVAILABLE'){badge+='green';button='<button class="primary test-btn" onclick="startTest('+t.testNo+')">▶ Start Test</button>'}
+  else if(t.state==='COMPLETED'){badge+='blue';button='<button class="primary test-btn" onclick="openCompleted('+t.testNo+')">◉ View Result</button>'}
+  else if(t.state==='PASSWORD'){badge+='orange';button='<button class="warning test-btn" onclick="askPassword('+t.testNo+')">🔐 Enter Test Password</button>'}
+  else {badge+='red';button='<button class="secondary test-btn" disabled>⊘ Test Not Available</button>'}
+  c.innerHTML='<h3>Test '+t.testNo+'</h3><div class="test-body"><div class="test-title">'+esc(t.title)+'</div><div class="test-info">☷ &nbsp;'+t.questionCount+' / '+t.required+' questions<br>◷ &nbsp;'+t.durationMinutes+' minutes<br>▣ &nbsp;'+esc(t.scheduleDate)+' | '+format12(t.startTime)+' - '+format12(t.endTime)+'</div><span class="'+badge+'">'+esc(t.label)+'</span>'+button+(t.adminUnlocked?'<div class="small">Admin unlocked</div>':'')+'</div>';
+  $('tests').appendChild(c);
+ });
+}
+function format12(x){const p=x.split(':'),h=Number(p[0]),ap=h>=12?'PM':'AM';return (h%12||12)+':'+p[1]+' '+ap}
+function askPassword(testNo){const p=prompt('Enter Test '+testNo+' password:');if(p!==null)startTest(testNo,p)}
+function startTest(testNo,password){
+ google.script.run.withSuccessHandler(r=>{exam=r;current=0;answers={};$('examTitle').textContent='Test '+r.testNo+' — 100 Questions';$('examStudent').textContent=session.name+' | '+session.rollNo;show('examView');activateExamSecurity();renderQ();startTimer()}).withFailureHandler(e=>alert(e.message)).startTest(session.studentId,session.token,testNo,password||'');
+}
+function openCompleted(testNo){const t=tests.find(x=>x.testNo===testNo);result={testNo:testNo,attemptId:t.attemptId,score:t.score,total:100,correct:0,wrong:0,unanswered:0,durationSec:0};google.script.run.withSuccessHandler(r=>{deactivateExamSecurity();result=r;showResult()}).withFailureHandler(e=>alert(e.message)).getMyResponses(session.studentId,session.token,t.attemptId,testNo)}
+function renderQ(){
+ const q=exam.questions[current];$('counter').textContent='Question '+(current+1)+' of 100';$('topic').textContent=q.topic||'';$('qtext').textContent=q.question;$('options').innerHTML='';
+ [['A',q.optionA],['B',q.optionB],['C',q.optionC],['D',q.optionD]].forEach(o=>{const d=document.createElement('div');d.className='option '+(answers[q.questionId]===o[0]?'selected':'');d.innerHTML='<input type="radio" '+(answers[q.questionId]===o[0]?'checked':'')+'> <b>'+o[0]+'.</b> '+esc(o[1]);d.onclick=()=>selectAnswer(q.questionId,o[0]);$('options').appendChild(d)});
+ $('prev').disabled=current===0;$('next').classList.toggle('hidden',current===99);$('submit').classList.toggle('hidden',current!==99);$('progress').style.width=((current+1)/100*100)+'%'
+}
+function selectAnswer(qid,a){answers[qid]=a;renderQ();google.script.run.withFailureHandler(e=>console.log(e.message)).saveAnswer(session.studentId,session.token,exam.attemptId,exam.testNo,qid,a)}
+function prevQ(){if(current>0){current--;renderQ()}}function nextQ(){if(current<99){current++;renderQ()}}
+function startTimer(){clearInterval(timer);function tick(){const rem=Math.max(0,exam.durationMinutes*60000-(Date.now()-exam.startTime));$('timer').textContent=duration(Math.floor(rem/1000));if(rem<=0){clearInterval(timer);submitExam(true)}}tick();timer=setInterval(tick,1000)}
+function submitExam(auto){if(!auto&&!confirm('Submit Test '+exam.testNo+'?'))return;clearInterval(timer);google.script.run.withSuccessHandler(r=>{result=r;showResult()}).withFailureHandler(e=>alert(e.message)).submitExam(session.studentId,session.token,exam.testNo,exam.attemptId)}
+function showResult(){show('resultView');$('resultTitle').textContent='Test '+result.testNo+' Result';$('resultStudent').textContent=session.name+' | '+session.rollNo;$('score').textContent=result.score+' / 100';$('resultGrid').innerHTML='<div class="box">Correct<div class="num">'+result.correct+'</div></div><div class="box">Wrong<div class="num">'+result.wrong+'</div></div><div class="box">Unanswered<div class="num">'+result.unanswered+'</div></div><div class="box">Time<div class="num">'+duration(result.durationSec)+'</div></div>'}
+function viewResponses(){show('responseView');$('responses').innerHTML='<p>Loading...</p>';google.script.run.withSuccessHandler(r=>{response=r;renderResponses()}).withFailureHandler(e=>alert(e.message)).getMyResponses(session.studentId,session.token,result.attemptId,result.testNo)}
+function renderResponses(){const s=response.student,a=response.attempt;$('responseInfo').innerHTML='<div class="box"><b>Name</b><br>'+esc(s.name)+'</div><div class="box"><b>Roll No</b><br>'+esc(s.rollNo)+'</div><div class="box"><b>Branch</b><br>'+esc(s.branch)+'</div><div class="box"><b>Section</b><br>'+esc(s.section)+'</div>';$('responseSummary').innerHTML='<div class="box">Score<div class="num">'+a.score+' / 100</div></div><div class="box">Correct<div class="num">'+a.correct+'</div></div><div class="box">Wrong<div class="num">'+a.wrong+'</div></div><div class="box">Unanswered<div class="num">'+a.unanswered+'</div></div>';$('responses').innerHTML='';response.responses.forEach(r=>{const d=document.createElement('div');d.className='response-question '+r.status.toLowerCase();d.innerHTML='<b>Q'+r.questionNo+'. '+esc(r.question)+'</b><p>A. '+esc(r.optionA)+'</p><p>B. '+esc(r.optionB)+'</p><p>C. '+esc(r.optionC)+'</p><p>D. '+esc(r.optionD)+'</p><div class="answer '+(r.status==='WRONG'?'wrongAnswer':'')+'"><b>Your Answer:</b> '+esc(r.selectedAnswer?r.selectedAnswer+'. '+r.selectedText:'Not Answered')+'</div><div class="answer correctAnswer"><b>Correct Answer:</b> '+esc(r.correctAnswer+'. '+r.correctText)+'</div><p><b>Status:</b> '+r.status+' | <b>Marks:</b> '+r.marksAwarded+' / '+r.maxMarks+'</p>';$('responses').appendChild(d)})}
+function showResult(){show('resultView');$('resultTitle').textContent='Test '+result.testNo+' Result';$('resultStudent').textContent=session.name+' | '+session.rollNo;$('score').textContent=result.score+' / 100';$('resultGrid').innerHTML='<div class="box">Correct<div class="num">'+result.correct+'</div></div><div class="box">Wrong<div class="num">'+result.wrong+'</div></div><div class="box">Unanswered<div class="num">'+result.unanswered+'</div></div><div class="box">Time<div class="num">'+duration(result.durationSec)+'</div></div>'}
+function downloadPDF(){google.script.run.withSuccessHandler(r=>{const b=atob(r.base64),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);const x=document.createElement('a');x.href=URL.createObjectURL(new Blob([a],{type:'application/pdf'}));x.download=r.fileName;x.click()}).withFailureHandler(e=>alert(e.message)).generateResponsePDF(session.studentId,session.token,result.attemptId,result.testNo)}
+function logout(){google.script.run.withSuccessHandler(()=>{clearInterval(timer);deactivateExamSecurity();session={};$('portalHeader').classList.add('hidden');show('loginView')}).withFailureHandler(()=>{session={};$('portalHeader').classList.add('hidden');show('loginView')}).logoutStudent(session.studentId,session.token)}
+
+
+/* ---------- EXAMINATION SECURITY ---------- */
+let securityViolations=0, lastSecurityEvent=0, examSecurityActive=false;
+function showSecurityWarning(text){
+  const w=$('securityWarning'); if(!w)return;
+  $('securityWarningText').textContent=text; w.classList.remove('hidden');
+  setTimeout(()=>w.classList.add('hidden'),5000);
+}
+function registerSecurityViolation(reason){
+  if(!examSecurityActive || !exam) return;
+  const now=Date.now(); if(now-lastSecurityEvent<900) return; lastSecurityEvent=now;
+  securityViolations++;
+  if(securityViolations>=4){
+    showSecurityWarning('Repeated examination security violations detected. The examination is being terminated and submitted.');
+    setTimeout(()=>submitExam(true),700);
+  }else{
+    showSecurityWarning('Security violation '+securityViolations+' of 4: '+reason+'. Please remain on the examination screen. A fourth violation will terminate the examination.');
+  }
+}
+function activateExamSecurity(){
+  examSecurityActive=true; securityViolations=0; lastSecurityEvent=0;
+  try{document.documentElement.requestFullscreen?.().catch(()=>{});}catch(e){}
+}
+function deactivateExamSecurity(){
+  examSecurityActive=false;
+  try{if(document.fullscreenElement)document.exitFullscreen?.().catch(()=>{});}catch(e){}
+  $('securityWarning')?.classList.add('hidden');
+}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)registerSecurityViolation('another tab or window was opened')});
+document.addEventListener('fullscreenchange',()=>{if(examSecurityActive && !document.fullscreenElement)registerSecurityViolation('fullscreen mode was exited')});
+document.addEventListener('copy',e=>{if(examSecurityActive)e.preventDefault()});
+document.addEventListener('cut',e=>{if(examSecurityActive)e.preventDefault()});
+document.addEventListener('paste',e=>{if(examSecurityActive)e.preventDefault()});
+document.addEventListener('contextmenu',e=>{if(examSecurityActive)e.preventDefault()});
+document.addEventListener('keydown',e=>{if(!examSecurityActive)return;const k=String(e.key).toLowerCase();if((e.ctrlKey||e.metaKey)&&['c','x','v','u','s','p'].includes(k)||k==='f12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(k))){e.preventDefault();registerSecurityViolation('restricted keyboard action')}});
+
+let adminData=null;
+
+function adminLogin(){
+  $('adminMsg').classList.add('hidden');
+  google.script.run
+    .withSuccessHandler(r=>{adminToken=r.token;loadAdmin()})
+    .withFailureHandler(e=>msg('adminMsg',e.message))
+    .adminLogin($('adminUser').value,$('adminPass').value)
+}
+function loadAdmin(){
+  show('adminView');
+  google.script.run
+    .withSuccessHandler(d=>{adminData=d;renderAdmin(d)})
+    .withFailureHandler(e=>alert(e.message))
+    .getAdminData(adminToken)
+}
+function renderAdmin(d){
+  const s=d.stats||{};
+  $('adminStats').innerHTML=
+    '<div class="admin-stat"><div class="label">Students</div><div class="value">'+s.totalStudents+'</div></div>'+
+    '<div class="admin-stat"><div class="label">Active Students</div><div class="value">'+s.activeStudents+'</div></div>'+
+    '<div class="admin-stat"><div class="label">Tests Ready</div><div class="value">'+s.readyTests+' / '+s.totalTests+'</div></div>'+
+    '<div class="admin-stat"><div class="label">Submitted</div><div class="value">'+s.submitted+'</div></div>'+
+    '<div class="admin-stat"><div class="label">In Progress</div><div class="value">'+s.inProgress+'</div></div>'+
+    '<div class="admin-stat"><div class="label">Average Score</div><div class="value">'+s.averagePercentage+'%</div></div>';
+
+  $('adminTests').innerHTML='';
+  d.tests.forEach(t=>{
+    const x=document.createElement('div');x.className='admin-test';
+    const unlock=t.adminUnlocked;
+    x.innerHTML=
+      '<div class="row"><div><h3 style="margin:0">Test '+t.testNo+'</h3>'+
+      '<div>'+esc(t.scheduleDate)+' | '+format12(t.start)+' - '+format12(t.end)+'</div>'+
+      '<div><b>'+t.count+' / '+t.required+' Questions</b> | Schedule: '+esc(t.scheduleState)+'</div></div>'+
+      '<span class="badge '+(t.count===t.required?'green':'red')+'">'+(t.count===t.required?'READY':'NOT READY')+'</span></div>'+
+      '<p>Admin status: <b>'+(unlock?'UNLOCKED':'LOCKED')+'</b> | Test password: <b>'+(t.passwordConfigured?'SET':'NOT SET')+'</b></p>'+
+      '<div class="admin-actions">'+
+      '<button class="'+(unlock?'danger':'success')+'" onclick="toggleUnlock('+t.testNo+','+(!unlock)+')">'+(unlock?'🔒 Lock Test':'🔓 Unlock Now')+'</button>'+
+      '<button class="warning" onclick="generateTestPassword('+t.testNo+')">🔑 Generate / Change Test Password</button></div>'+
+      '<div id="pass'+t.testNo+'" class="small"></div>';
+    $('adminTests').appendChild(x);
+  });
+
+  const testFilter=$('resultTestFilter');
+  const old=testFilter.value;
+  testFilter.innerHTML='<option value="">All Tests</option>'+d.tests.map(t=>'<option value="'+t.testNo+'">Test '+t.testNo+'</option>').join('');
+  testFilter.value=old;
+  renderAdminResults();
+}
+function renderAdminResults(){
+  if(!adminData)return;
+  const search=String($('resultSearch').value||'').trim().toLowerCase();
+  const test=String($('resultTestFilter').value||'');
+  const status=String($('resultStatusFilter').value||'');
+  const rows=adminData.results.filter(r=>{
+    const hay=(String(r.rollNo)+' '+String(r.name)).toLowerCase();
+    return (!search||hay.indexOf(search)>=0)&&(!test||String(r.testNo)===test)&&(!status||String(r.status).toUpperCase()===status);
+  });
+  let h='<table class="admin-table"><tr><th>Roll</th><th>Name</th><th>Section</th><th>Test</th><th>Status</th><th>Score</th><th>%</th><th>Correct</th><th>Wrong</th><th>Unanswered</th><th>Duration</th></tr>';
+  if(!rows.length) h+='<tr><td colspan="11" style="text-align:center">No matching records.</td></tr>';
+  rows.forEach(r=>h+='<tr><td>'+esc(r.rollNo)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.section)+'</td><td>'+r.testNo+'</td><td>'+esc(r.status)+'</td><td>'+r.score+' / 100</td><td>'+r.percentage+'%</td><td>'+r.correct+'</td><td>'+r.wrong+'</td><td>'+r.unanswered+'</td><td>'+duration(r.durationSec)+'</td></tr>');
+  $('adminTable').innerHTML=h+'</table>';
+}
+function toggleUnlock(testNo,on){
+  google.script.run.withSuccessHandler(loadAdmin).withFailureHandler(e=>alert(e.message)).setTestUnlock(adminToken,testNo,on)
+}
+function generateTestPassword(testNo){
+  google.script.run.withSuccessHandler(r=>{
+    $('pass'+testNo).innerHTML='<span class="message ok" style="display:block">New Test '+testNo+' password: <b>'+esc(r.password)+'</b> — save/share it securely.</span>'
+  }).withFailureHandler(e=>alert(e.message)).generateTestPassword(adminToken,testNo)
+}
+function resetPassword(){
+  google.script.run.withSuccessHandler(r=>{
+    $('resetResult').innerHTML='<div class="message ok">New student password for <b>'+esc(r.name)+'</b>: <b>'+esc(r.password)+'</b></div>'
+  }).withFailureHandler(e=>alert(e.message)).resetStudentPassword(adminToken,$('resetRoll').value)
+}
+let questionBankText='';
+function loadQuestionBankFile(event){
+  const file=event.target.files?.[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{questionBankText=String(reader.result||'');$('bankCsvText').value=questionBankText;msg('bankMsg','CSV loaded: '+file.name+'. Click Validate & Preview.',true)};
+  reader.onerror=()=>msg('bankMsg','Unable to read the CSV file.');
+  reader.readAsText(file);
+}
+function getQuestionBankText(){return String($('bankCsvText').value||questionBankText||'').trim();}
+function previewQuestionBank(){
+  const csv=getQuestionBankText(), t=Number($('bankTestNo').value);
+  if(!csv){msg('bankMsg','Select a CSV file or paste CSV content first.');return;}
+  msg('bankMsg','Validating question bank…',true);
+  google.script.run.withSuccessHandler(r=>{
+    const topics=Object.entries(r.topics||{}).map(([k,v])=>esc(k)+' ('+v+')').join(', ')||'—';
+    let h='<div class="message ok"><b>VALID</b> — Test '+r.testNo+' | '+r.count+' questions | Topics: '+topics+'</div>';
+    h+='<table class="admin-table"><tr><th>ID</th><th>Topic</th><th>Question</th><th>Correct</th><th>Marks</th></tr>';
+    (r.first||[]).forEach(x=>h+='<tr><td>'+esc(x.QuestionId)+'</td><td>'+esc(x.Topic)+'</td><td>'+esc(x.Question)+'</td><td>'+esc(x.CorrectAnswer)+'</td><td>'+esc(x.Marks)+'</td></tr>');
+    h+='</table><div class="admin-note" style="padding:8px">Showing first 5 questions only. Import writes all 100 after validation.</div>';
+    $('bankPreview').innerHTML=h;
+  }).withFailureHandler(e=>{ $('bankPreview').innerHTML=''; msg('bankMsg',e.message); }).previewQuestionBankCSV(adminToken,csv,t);
+}
+function importQuestionBank(){
+  const csv=getQuestionBankText(), t=Number($('bankTestNo').value);
+  if(!csv){msg('bankMsg','Select a CSV file or paste CSV content first.');return;}
+  if(!confirm('Import this 100-question bank as Test '+t+'? Existing Test '+t+' questions will be replaced if no attempt records exist.'))return;
+  msg('bankMsg','Importing…',true);
+  google.script.run.withSuccessHandler(r=>{
+    msg('bankMsg',r.message+' '+r.count+'/100 questions are now active.',true);
+    $('bankPreview').innerHTML='';
+    loadAdmin();
+  }).withFailureHandler(e=>msg('bankMsg',e.message)).importQuestionBankCSV(adminToken,csv,t);
+}
+function downloadQuestionTemplate(){
+  const headers=['QuestionId','TestNo','Topic','Question','OptionA','OptionB','OptionC','OptionD','CorrectAnswer','Marks','Active'];
+  const row=['TEST1Q001','1','RCC','Sample question?','Option A','Option B','Option C','Option D','A','1','TRUE'];
+  const csv=headers.join(',')+'\n'+row.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')+'\n';
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='Question_Bank_Template.csv';document.body.appendChild(a);a.click();a.remove();
+}
+function exportAdminResults(){
+  google.script.run.withSuccessHandler(r=>{
+    const blob=new Blob(['\\ufeff'+r.csv],{type:'text/csv;charset=utf-8'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=r.fileName;
+    document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  }).withFailureHandler(e=>alert(e.message)).exportAdminResultsCSV(adminToken)
+}
+function adminLogout(){
+  google.script.run.withSuccessHandler(()=>{adminToken='';adminData=null;show('loginView')}).adminLogout(adminToken)
+}
+</script>
+
+</body>
+</html>
